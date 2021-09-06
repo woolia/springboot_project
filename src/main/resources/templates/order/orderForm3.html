@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header" />
+<style>
+ .itemlist {
+ display:inline;
+ margin-left:10px;
+ padding:10px
+ }
+</style>
+<body>
+<div class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+    <form role="form" th:action th:object="${order}" method="post">
+        <div class="form-group">
+            <label for="member">주문회원</label>
+            <select name="memberId" id="member" class="form-control">
+                <option value="">회원선택</option>
+                <option th:each="member : *{members}"
+                        th:value="${member.id}"
+                        th:text="${member.name}" />
+            </select>
+        </div>
+
+        <!-- multi checkbox -->
+        <div class="form-group">
+            <div>상품</div>
+            <th:block th:each="item , stat : ${order.items}">
+                <div th:if="${item.open == true}" class="itemlist">
+                    <!-- item.open 이 true 일때만 해당 div를 열도록 설정 -->
+                    <input type="checkbox" th:field="*{items}" th:value="${item.id}"
+                           class="form-check-input"
+                           onclick='getCheckboxValue(event)'>
+
+                    <label th:for="${#ids.prev('items')}"
+                           th:text="${item.name}" class="form-check-label">서울</label>
+
+                    <input type="number" th:field="*{counts}" th:placeholder="| 주문 수량을 입력하세요 |" class="form-control">
+
+<!--                    <input type="number" th:id="|count${stat.count}|" th:name="|count${stat.count}|" th:placeholder="| 주문 수량을 입력하세요 |" class="form-control">-->
+<!--                    <label th:for="${#ids.prev('counts')}"-->
+<!--                           class="form-check-label"></label>-->
+                </div>
+            </th:block>
+        </div>
+
+        <hr>
+
+        <!-- SELECT -->
+        <div>
+            <div>배송 방식</div>
+            <select id="parcelType" name="parcelType" class="form-select">
+                <option value="">==배송 방식 선택==</option>
+                <option th:each="entry : ${parcelType}"
+                        th:value="${entry.key}"
+                        th:text="${entry.value}">배송 방식</option>
+            </select>
+        </div>
+
+        <!-- thymeleaf 에서 map 사용하는 법
+        <table th:each="entry : ${map}">
+    <tr>
+        <td th:text="${entry.key}">Key 1</td>
+        <td th:text="${entry.value}">Value 1</td>
+    </tr>
+
+</table>
+        -->
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <br/>
+    <div th:replace="fragments/footer :: footer" />
+</div> <!-- /container -->
+
+<script>
+function getCheckboxValue(event)  {
+  var con = document.getElementById("counts");
+
+  if(event.target.checked)  {
+    con.style.display = 'block';
+  }else{
+    con.style.display = 'none';
+  }
+}
+</script>
+</body>
+</html>

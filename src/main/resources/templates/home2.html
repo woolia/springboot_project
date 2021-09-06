@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header">
+    <title>Hello</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<style>
+    .info{
+        float: right;
+    }
+</style>
+<body>
+<div class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader" />
+    <div class="jumbotron">
+        <div>
+        <p th:if="${param.status}" th:text="|${param.name} 등록되었습니다|"> 회원 or 상품 or 주문 등록되었습니다.</p>
+        </div>
+        <!-- redirectAttributes에 member , order , item 모두 하나의 필드값으로 값을 넘긴다. -->
+        <h1>HELLO SHOP</h1>
+
+        <!--
+        <a class="btn btn-lg btn-secondary" th:href="@{/members/enroll}">회원 가입</a>
+        <a class="btn btn-lg btn-secondary" th:href="@{/login}">로그인</a>
+        -->
+
+        <p class="lead" th:text="|${member.name} 회원 입니다.|">회원</p>
+        <p>
+            <a class="btn btn-lg btn-secondary" th:href="@{/logout}">로그아웃</a>
+            <a class="btn btn-lg btn-secondary" th:href="@{/members/list}" >회원 목록</a>
+        </p>
+        <p class="lead">상품 기능</p>
+        <p>
+            <a class="btn btn-lg btn-dark" th:href="@{/items/enroll}">상품 등록</a>
+            <a class="btn btn-lg btn-dark" th:href="@{/items/list}">상품 목록</a>
+        </p>
+        <p class="lead">주문 기능</p>
+        <p>
+            <a class="btn btn-lg btn-info" th:href="@{/order/1}">상품 주문1</a>
+            <a class="btn btn-lg btn-info" th:href="@{/order/2}">상품 주문2</a>
+            <a class="btn btn-lg btn-info" th:href="@{/order/3}">상품 주문3</a>
+            <a class="btn btn-lg btn-info" th:href="@{/order/4}">상품 주문4</a>
+            <a class="btn btn-lg btn-info" th:href="@{/order/list}">주문 내역</a>
+        </p>
+    </div>
+    <div th:replace="fragments/footer :: footer" />
+</div> <!-- /container -->
+</body>
+</html>
