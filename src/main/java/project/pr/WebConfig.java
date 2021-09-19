@@ -17,6 +17,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class WebConfig implements WebMvcConfigurer {
 
+
+
     // interceptor 를 등록하기 위해서는
     // WebMvcConfigurer 에서 addInterceptors 를 오버라이딩 해준다.
 
