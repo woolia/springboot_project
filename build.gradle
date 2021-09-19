@@ -27,6 +27,11 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 
+	// 구글 로그인 추가
+	// 해당 옵션을 추가해야만 SecurityConfig의  WebSecurityConfigurerAdapter 클래스를 사용할 수 있다.
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client:2.5.4'
+
+
 	//querydsl 추가
 	implementation 'com.querydsl:querydsl-jpa'
 

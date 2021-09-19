@@ -61,7 +61,9 @@
         <div class="form-group">
             <label th:for="email">이메일</label>
             <input type="text" th:field="*{email}" class="form-control"
-                   placeholder="이메일을 입력하세요">
+                   placeholder="이메일을 입력하세요"
+                    th:class="${#fields.hasErrors('email')} ? 'form-control fieldError' : form-control">
+            <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>

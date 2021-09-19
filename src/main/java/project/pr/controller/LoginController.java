@@ -9,6 +9,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import project.pr.auth.dto.SessionUser;
 import project.pr.controller.form.LoginForm;
 import project.pr.controller.form.MemberEnrollForm;
 import project.pr.domain.Member;
@@ -26,7 +27,8 @@ public class LoginController {
     private final MemberService memberService;
 
     @GetMapping("/login")
-    public String loginForm(@ModelAttribute LoginForm loginForm){
+    public String loginForm(@ModelAttribute LoginForm loginForm , HttpServletRequest request){
+
         return "login/loginForm";
     }
 
@@ -65,6 +67,7 @@ public class LoginController {
                         HttpServletRequest request , Model model,
                         @RequestParam(defaultValue = "/") String redirectURL){
 
+        log.info("로그인 세션 : {}" , request.getSession());
         log.info("{} , {}" , loginForm.getLoginId() , loginForm.getPassword());
 
         Member validatedMember = memberService.findLoginId(loginForm.getLoginId());
@@ -74,12 +77,14 @@ public class LoginController {
         }
 
         if(bindingResult.hasErrors()){
+            log.info("에러가 있습니다. ");
             return "login/loginForm";
         }
 
         // 로그인 성공처리
 
         Member loginMember = memberService.findLoginMember(loginForm.getLoginId(), loginForm.getPassword());
+        SessionUser sessionUser = new SessionUser(loginMember);
         HttpSession session = request.getSession();
         session.setAttribute(SessionConst.LOGIN_MEMBER , loginMember);
 
@@ -91,12 +96,17 @@ public class LoginController {
         // 만약에 파라미터로 redirectURL 값이 넘어오게 되었을 때는 redirectURL 값이 있기 때문에
         // !redirectURL.equals("") 로 redirectURL 가 기본경로가 아닐때 redirect:/redirectURL 로 이동하도록 설정하였다.
 
-        log.info("requestURL = {}" , redirectURL);
+        Object attribute = session.getAttribute(SessionConst.LOGIN_MEMBER);
+
         if (!redirectURL.equals("/")){
+            log.info("redirect 쪽 " , redirectURL);
            return "redirect:"+redirectURL ;
         }
         // 만약에 redirectURL 이 없다면 일반 로그인창으로 들어온 경우이기 때문에 그냥 /home으로 보낸다.
-        return "redirect:/home";
+
+        log.info("/home 으로 돌아간다 .");
+
+        return "redirect:/";
 
 
     }
@@ -104,6 +114,8 @@ public class LoginController {
 
     @GetMapping("/logout")
     public String logout(HttpServletRequest request){
+
+        log.info("로그아웃 세션 : {}" , request.getSession());
 
         HttpSession session = request.getSession(false);
         // 여기서 false 라고 하는 이유는 request.getSession(true) 라고 하면 새로운 세션을 만든다.

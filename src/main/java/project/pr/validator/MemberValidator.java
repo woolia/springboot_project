@@ -56,5 +56,10 @@ public class MemberValidator implements Validator {
             errors.rejectValue("loginId","MemberRequired");
         }
 
+        if (memberService.findEmail(target1.getEmail()) != null){
+            errors.rejectValue("email" , "existEmail");
+        }
+
+
     }
 }

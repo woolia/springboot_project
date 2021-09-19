@@ -2,6 +2,7 @@ package project.pr.interceptor;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.ModelAndView;
 import project.pr.session.SessionConst;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +15,17 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     // 로그인 요청은 preHandle 메서드만 있으면 된다.
     // 다른 postHandle , afterCompletion 등은 로그인에 대한 필터에 적용되지 않는다.
+
+
+    @Override
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+        log.info("========== postHandle =========");
+    }
+
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+        log.info("============== afterCompletion ============");
+    }
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {

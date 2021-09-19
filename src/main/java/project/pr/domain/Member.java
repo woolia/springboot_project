@@ -6,6 +6,7 @@ import project.pr.domain.status.Grade;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Getter @Setter(AccessLevel.PRIVATE)
@@ -29,6 +30,9 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private Grade grade;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList<>();
 
@@ -47,7 +51,7 @@ public class Member {
         this.email = email;
     }
 
-    public Member(String name, String loginId, String password ,  Address address, String phoneNumber , Grade grade , String email , int cash) {
+    public Member(String name, String loginId, String password ,  Address address, String phoneNumber , Grade grade , String email , int cash, Role role) {
         this.name = name;
         this.loginId = loginId;
         this.password = password;
@@ -56,6 +60,7 @@ public class Member {
         this.grade = grade;
         this.email = email;
         this.cash = cash;
+        this.role = Role.USER;
     }
 
     public void change(String name, Address address, String phoneNumber , Grade grade , String email){
@@ -76,6 +81,31 @@ public class Member {
 
     public void updateGrade(Grade grade){
         this.grade = grade;
+    }
+
+    public Member otherLoginMemberUpdate(String name , String email){
+        this.name = name;
+        this.loginId =null;
+        this.password = null;
+        this.address = null;
+        this.phoneNumber = null;
+        this.grade = Grade.NORMAL;
+        this.email = email;
+        this.cash = 0;
+        this.role = Role.USER;
+        return this;
+    }
+
+    public Member (String name , String email){
+        this.name = name;
+        this.loginId =null;
+        this.password = null;
+        this.address = null;
+        this.phoneNumber = null;
+        this.grade = Grade.NORMAL;
+        this.email = email;
+        this.cash = 0;
+        this.role = Role.USER;
     }
 
     public void upgradeGrade(){

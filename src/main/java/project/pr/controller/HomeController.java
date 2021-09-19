@@ -7,6 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import project.pr.auth.LoginUser;
+import project.pr.auth.dto.SessionUser;
 import project.pr.domain.*;
 import project.pr.domain.status.Grade;
 import project.pr.domain.status.ItemType;
@@ -27,17 +29,23 @@ public class HomeController {
     private final MemberService memberService;
     private final ItemService itemService;
 
-
     @RequestMapping
-    public String hello(HttpServletRequest request , Model model){
+    public String hello(HttpServletRequest request , Model model ){
         // 세션객체가 있을때는 기본페이지 localhost:8080/ 에 들어와도
         // 다시 회원폼 즉, localhost:8080/home 으로 이동하도록 설정
 
         HttpSession session = request.getSession(false);
 
+        if (session != null){
+            Object attribute = session.getAttribute(SessionConst.LOGIN_MEMBER);
+            System.out.println("hello attribute = " + attribute);
+        }
+        log.info("세션 : {}" , request.getSession());
+
         if(session == null){
             return "home";
         }
+
 
         Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
 
@@ -67,8 +75,16 @@ public class HomeController {
      */
 
     @RequestMapping("/home")
-    public String home2(@SessionAttribute(name = SessionConst.LOGIN_MEMBER , required = false) Member loginMember, Model model){
+    public String home2(@SessionAttribute(name = SessionConst.LOGIN_MEMBER , required = false) Member loginMember, Model model , HttpServletRequest request){
 
+        HttpSession session = request.getSession(false);
+        if (session != null){
+            Object attribute = session.getAttribute(SessionConst.LOGIN_MEMBER);
+            System.out.println("home2 attribute = " + attribute);
+
+        }
+
+        log.info("홈 화면 세션 : {}" , request.getSession());
         /*
         HttpSession session = request.getSession(false);
         Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
@@ -93,8 +109,8 @@ public class HomeController {
     @PostConstruct
     void init(){
 
-        Member userA = new Member("userA", "A","1234" ,new Address("street1", "city1"), "010-4652-6327", Grade.FIRST, "zecrar@naver.com" , 0);
-        Member userB = new Member("userB","B","1234" ,new Address("street2", "city3"), "010-4652-1234", Grade.THIRD, "zecrar@gmail.com" , 0);
+        Member userA = new Member("userA", "A","1234" ,new Address("street1", "city1"), "010-4652-6327", Grade.FIRST, "zecrar@naver.com" , 0,Role.USER);
+        Member userB = new Member("userB","B","1234" ,new Address("street2", "city3"), "010-4652-1234", Grade.THIRD, "zecrar@daum.net" , 0,Role.USER);
 
         memberService.join(userA);
         memberService.join(userB);

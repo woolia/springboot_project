@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.pr.api.dto.MemberDto;
+import project.pr.auth.dto.SessionUser;
 import project.pr.domain.Member;
 import project.pr.repository.db.MemberRepository;
 
@@ -27,7 +28,6 @@ public class MemberService {
     // 회원가입
     @Transactional
     public Long join(Member member){
-
         memberRepository.save(member);
         return member.getId();
     }
@@ -96,5 +96,10 @@ public class MemberService {
         int result = member.addCash(cash);
         log.info("현재 스레드 : {} , 입금후잔액 : {}" , Thread.currentThread().getName() , result);
         memberRepository.save(member);
+    }
+
+    public Member findEmail(String email) {
+        Member member = memberRepository.findLoginFormByEmail(email).orElse(null);
+        return member;
     }
 }

@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import project.pr.controller.form.LoginForm;
 import project.pr.controller.form.MemberEnrollForm;
 import project.pr.domain.Address;
+import project.pr.domain.Role;
 import project.pr.domain.status.Grade;
 import project.pr.domain.Member;
 import project.pr.service.MemberService;
@@ -65,7 +66,7 @@ public class MemberController {
         log.info("{}" , memberForm.toString());
         Address address = new Address(memberForm.getStreet(), memberForm.getCity());
 
-        Member newMember = new Member(memberForm.getName(), memberForm.getLoginId() ,memberForm.getPassword() , address, memberForm.getPhoneNumber(), Grade.NORMAL, memberForm.getEmail());
+        Member newMember = new Member(memberForm.getName(), memberForm.getLoginId() ,memberForm.getPassword() , address, memberForm.getPhoneNumber(), Grade.NORMAL, memberForm.getEmail(),0, Role.USER);
         memberService.join(newMember);
 
         // 중복된 이메일이 3개 이상일때 예외가 발생하므로 예외처리해야한다.
@@ -87,6 +88,7 @@ public class MemberController {
     public String memberList(Model model){
 
         log.info("======================");
+
 
         List<Member> members = memberService.findMembers();
         model.addAttribute("members" , members);
