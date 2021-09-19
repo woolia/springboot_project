@@ -40,6 +40,8 @@ dependencies {
 
 	runtimeOnly 'com.h2database:h2'
 
+	// local은 문제없는데 putty에서 배포할때 querydsl 이 자꾸 에러가 발생했는데
+	// compileOnly, annotationProcessor에 lombok의 버전을 맞춰주기 빌드가 성공하였다
 	compileOnly 'org.projectlombok:lombok:1.18.12'
 	annotationProcessor 'org.projectlombok:lombok:1.18.12'
 

@@ -1,4 +1,6 @@
 spring:
+  session:
+    store-type: jdbc
   profiles:
     include: oauth
   datasource:
@@ -17,6 +19,8 @@ spring:
     basename: messages, errors
 logging.level:
   org.hibernate.SQL: debug
+
+
 
 
 server:
