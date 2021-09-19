@@ -4,19 +4,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
-import project.pr.auth.LoginUser;
-import project.pr.auth.dto.SessionUser;
 import project.pr.domain.*;
 import project.pr.domain.status.Grade;
 import project.pr.domain.status.ItemType;
 import project.pr.service.ItemService;
 import project.pr.service.MemberService;
 import project.pr.session.SessionConst;
-
-import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -106,7 +101,7 @@ public class HomeController {
     }
 
 
-    @PostConstruct
+    //@PostConstruct
     void init(){
 
         Member userA = new Member("userA", "A","1234" ,new Address("street1", "city1"), "010-4652-6327", Grade.FIRST, "zecrar@naver.com" , 0,Role.USER);
