@@ -4,6 +4,7 @@ import lombok.*;
 import project.pr.domain.status.Grade;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -11,7 +12,7 @@ import java.util.UUID;
 @Entity
 @Getter @Setter(AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Member {
+public class Member implements Serializable {
 
     @Id @GeneratedValue
     @Column(name = "MEMBER_ID")

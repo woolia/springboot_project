@@ -8,13 +8,14 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Embeddable;
 import javax.persistence.GeneratedValue;
+import java.io.Serializable;
 import java.util.Objects;
 
 @AllArgsConstructor
 @Embeddable
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Address {
+public class Address implements Serializable {
 
     private String street;
     private String city;
