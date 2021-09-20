@@ -32,8 +32,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client:2.5.4'
 
 	// 세션 저장소 추가
-	// 해당 옵션이 있어야 schema-mysql 이 가능한거 같다.
- 	implementation 'org.springframework.session:spring-session-jdbc:2.5.2'
+	// 해당 옵션이 있어야 schema-mysql 이 가능하고 세션테이블이 생성된다.
+ 	implementation 'org.springframework.session:spring-session-jdbc'
 
 	//querydsl 추가
 	implementation 'com.querydsl:querydsl-jpa'
