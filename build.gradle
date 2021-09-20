@@ -9,7 +9,7 @@ plugins {
 
 group = 'project'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
+sourceCompatibility = '8'
 
 configurations {
 	compileOnly {
@@ -57,7 +57,7 @@ test {
 }
 
 //querydsl 추가 시작
-def querydslDir = "src/main/generated"
+def querydslDir = "$buildDir/generated/querydsl"
 
 querydsl {
 	jpa = true
