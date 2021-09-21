@@ -1,6 +1,6 @@
 spring:
   profiles:
-    include: oauth
+    include: oauth,real-db
   session:
     store-type: jdbc
     jdbc:
@@ -18,6 +18,8 @@ spring:
       hibernate:
         # show_sql: true
         format_sql: true
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+
   messages:
     basename: messages, errors
 logging.level:
