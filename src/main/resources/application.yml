@@ -2,7 +2,6 @@ spring:
   profiles:
     include: oauth,real-db
   session:
-    store-type: jdbc
     jdbc:
       initialize-schema: always
     # jdbc.initialize-schema: always 을 하면서 session이 테이블에 자동으로 생성됨
@@ -11,6 +10,8 @@ spring:
     username: sa
     password:
     driver-class-name: org.h2.Driver
+    hikari:
+      jdbc-url: jdbc:h2:tcp://localhost/~/project;MODE=MYSQL
   jpa:
     hibernate:
       ddl-auto: create
@@ -19,7 +20,6 @@ spring:
         # show_sql: true
         format_sql: true
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-
   messages:
     basename: messages, errors
 logging.level:
